@@ -1,1 +1,0 @@
-import{y as t,ai as s,n as a,ar as e,p as n}from"./index-9c28a4f1.js";function u(){const o=t(!1);return s(()=>{window.requestAnimationFrame(()=>{o.value=!0})}),{ssrBootStyles:a(()=>o.value?void 0:{transition:"none !important"}),isBooted:e(o)}}const d=n({tag:{type:String,default:"div"}},"tag");export{d as m,u};
