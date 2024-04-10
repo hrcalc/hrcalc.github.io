@@ -101,6 +101,8 @@ const base_salary_after_registration = $computed(() => rnd(gross_salary * 1.1))
 const next_year_monthly_social_charges: Record<number, Function> = {
   2024: (base_amount: number) => {
     let amount = base_amount * 0.93
+    if(amount < 2760) return 1111.11*0.313
+    if(amount < 3190) return 1167.47*0.313
     if(amount < 3620) return 1241.83*0.313
     if(amount < 4050) return 1307.19*0.313
     if(amount < 6000) return 1454.25*0.313
@@ -108,6 +110,8 @@ const next_year_monthly_social_charges: Record<number, Function> = {
   },
   2025: (base_amount: number) => {
     let amount = base_amount * 0.93
+    if(amount < 2760) return 1356.21*0.313
+    if(amount < 3190) return 1437.91*0.313
     if(amount < 3620) return 1519.61*0.313
     if(amount < 4050) return 1601.31*0.313
     if(amount < 6000) return 1732.03*0.313
