@@ -8,6 +8,7 @@ const routes = [
     children: [
       { path: '', name: 'index', component: () => import('../pages/IndexPage.vue'), },
       { path: 'spain', name: 'spain', component: () => import('../pages/SpainCalc.vue'), },
+      { path: 'mexico', name: 'mexico', component: () => import('../pages/MexicoCalc.vue'), },
     ],
   },
 ]
