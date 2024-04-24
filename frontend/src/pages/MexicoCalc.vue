@@ -3,7 +3,7 @@
     <v-responsive class="align-center" min-width="1024">
       <v-row>
         <v-col cols="4">
-          <h4>Tax calculator Cyprus</h4>
+          <h4>Tax calculator Mexico</h4>
           <v-select v-model="year" :items="[2023, 2024]" label="Year"></v-select>
           <v-text-field label="Gross Salary" v-model.number="gross_salary" type="number" hide-details
             prefix="$"></v-text-field>
@@ -29,7 +29,7 @@
             </v-list-item>
           </v-list>
         </v-col>
-        <v-col cols="4">
+        <!--<v-col cols="4">
           <v-list density="compact">
             <v-list-item>
               <v-list-item-title class="font-weight-bold">Salary tax calculation</v-list-item-title>
@@ -79,7 +79,7 @@
             </v-list-item>  
             <v-list-item title="Christmas taxable base">
               <template v-slot:append>$ {{ rnd(christmas_taxable_base) }}</template>
-            </v-list-item>                       
+            </v-list-item>                        
             <v-list-item title="ISR tax">
               <template v-slot:append>$ {{ rnd(christmas_month_tax) }} </template>
             </v-list-item>
@@ -95,12 +95,12 @@
             <v-list-item title="Gross Salary">
               <template v-slot:append>$ {{ gross_salary }}</template>
             </v-list-item>
-            <v-list-item title="Christmas taxable part">
+            <v-list-item title="Anniversary taxable part">
               <template v-slot:append>$ {{ rnd(vacation_taxable_part) }}</template>
             </v-list-item>  
-            <v-list-item title="Christmas taxable base">
+            <v-list-item title="Anniversary taxable base">
               <template v-slot:append>$ {{ rnd(vacation_taxable_base) }}</template>
-            </v-list-item>                       
+            </v-list-item>                     
             <v-list-item title="ISR tax">
               <template v-slot:append>$ {{ rnd(vacation_month_tax) }} </template>
             </v-list-item>
@@ -111,11 +111,46 @@
               <template v-slot:append>$ {{ rnd(vacation_net_salary) }} </template>
             </v-list-item>
           </v-list>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          Average Net Calculation: $ {{ rnd(average_net_calculation) }}
+        </v-col>-->
+        <v-col cols="8">
+          <v-table density="compact">
+            <thead>
+              <tr>
+                <th class="text-left">Month</th>
+                <th class="text-left">Base Salary</th>
+                <th class="text-left">Special</th>
+                <th class="text-left">Tax</th>
+                <th class="text-left">Net Salary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left">Normal</td>
+                <td class="text-left">$ {{ gross_salary }}</td>
+                <td class="text-left">$ 0</td>
+                <td class="text-left">$ {{ rnd(isr_tax + imss_tax) }}</td>
+                <td class="text-left">$ {{ rnd(net_salary) }}</td>
+              </tr>
+              <tr>
+                <td class="text-left">December</td>
+                <td class="text-left">$ {{ gross_salary }}</td>
+                <td class="text-left">$ {{ rnd(christmas_bonus) }}</td>
+                <td class="text-left">$ {{ rnd(isr_tax + christmas_actual_tax + imss_tax) }}</td>
+                <td class="text-left">$ {{ rnd(christmas_net_salary) }}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Anniversary</td>
+                <td class="text-left">$ {{ gross_salary }}</td>
+                <td class="text-left">$ {{ rnd(vacation_premium) }}</td>
+                <td class="text-left">$ {{ rnd(isr_tax + vacation_actual_tax + imss_tax) }}</td>
+                <td class="text-left">$ {{ rnd(vacation_net_salary) }}</td>
+              </tr>
+              <tr>
+                <td class="text-left" colspan="4">Average for 12 month</td>
+                <td class="text-left">$ {{ rnd(average_net_calculation) }}</td>
+              </tr>
+            </tbody>
+          </v-table>
         </v-col>
       </v-row>
     </v-responsive>
@@ -123,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-let gross_salary = $ref(154046)
+let gross_salary = $ref(100000)
 let net_salary_expected = $ref(0)
 let exchange_rate = $ref(18.5)
 let expected_net_salary = $computed(() => net_salary_expected*exchange_rate)
@@ -164,12 +199,13 @@ const calculate_isr = (monthly_income: number) => {
 }
 
 let monthly_isr = $computed(() => calculate_isr(monthly_taxable_income))
+let monthly_isr2 = $computed(() => calculate_isr(gross_salary))
 
 let daily_isr = $computed(() => monthly_isr/30.4)
 let payroll_isr = $computed(() => daily_isr*15)
 let isr_tax = $computed(() => payroll_isr*2)
 
-let actual_tax_rate = payroll_isr/payroll_salary*100
+// let actual_tax_rate = payroll_isr/payroll_salary*100
 
 let fix_integrated_salary = $computed(() => {
   return daily_salary + 15/366*daily_salary + 20/366 * 0.25 * daily_salary
@@ -183,21 +219,29 @@ let net_salary = $computed(() => {
 })
 
 let christmas_bonus_taxable_part = $computed(() => christmas_bonus - 30*uma)
-let christmas_taxable_base = $computed(() => gross_salary + christmas_bonus_taxable_part)
+let christmas_monthly_taxable_income = $computed(() => christmas_bonus_taxable_part/365*30.4)
+let christmas_taxable_base = $computed(() => gross_salary + christmas_monthly_taxable_income)
 let christmas_month_tax = $computed(() => {
   return calculate_isr(christmas_taxable_base)
 })
+let christmas_diff = $computed(() => christmas_month_tax - monthly_isr2)
+let christmas_tax_rate = $computed(() => christmas_diff/christmas_monthly_taxable_income)
+let christmas_actual_tax = $computed(() => christmas_tax_rate*christmas_bonus_taxable_part)
 let christmas_net_salary = $computed(() => {
-  return gross_salary + christmas_bonus - christmas_month_tax - imss_tax
+  return gross_salary + christmas_bonus - isr_tax - christmas_actual_tax - imss_tax
 })
 
-let vacation_taxable_part = $computed(() => vacation_premium - 30*uma)
-let vacation_taxable_base = $computed(() => gross_salary + vacation_taxable_part)
+let vacation_taxable_part = $computed(() => vacation_premium - 15*uma)
+let vacation_monthly_taxable_income = $computed(() => vacation_taxable_part/365*30.4)
+let vacation_taxable_base = $computed(() => gross_salary + vacation_monthly_taxable_income)
 let vacation_month_tax = $computed(() => {
   return calculate_isr(vacation_taxable_base)
 })
+let vacation_diff = $computed(() => vacation_month_tax - monthly_isr2)
+let vacation_tax_rate = $computed(() => vacation_diff/vacation_monthly_taxable_income)
+let vacation_actual_tax = $computed(() => vacation_tax_rate*vacation_taxable_part)
 let vacation_net_salary = $computed(() => {
-  return gross_salary + vacation_premium - vacation_month_tax - imss_tax
+  return gross_salary + vacation_premium - isr_tax - vacation_actual_tax - imss_tax
 })
 
 let average_net_calculation = $computed(() => (net_salary*10 + christmas_net_salary + vacation_net_salary)/12)
