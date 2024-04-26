@@ -118,7 +118,7 @@
               <tr>
                 <th class="text-left">Month</th>
                 <th class="text-left">Base Salary</th>
-                <th class="text-left">Special</th>
+                <th class="text-left">MX bonuses</th>
                 <th class="text-left">Tax</th>
                 <th class="text-left">Net Salary</th>
               </tr>
