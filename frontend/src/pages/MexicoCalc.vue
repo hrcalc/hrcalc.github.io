@@ -160,7 +160,7 @@
 <script setup lang="ts">
 let gross_salary = $ref(100000)
 let net_salary_expected = $ref(0)
-let exchange_rate = $ref(18.5)
+let exchange_rate = $ref(19.19)
 let expected_net_salary = $computed(() => net_salary_expected*exchange_rate)
 let year = $ref(new Date().getFullYear())
 let payroll_salary = $computed(() => gross_salary/2)
