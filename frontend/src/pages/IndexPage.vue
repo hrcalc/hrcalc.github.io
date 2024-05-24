@@ -107,7 +107,7 @@ let net_salary_expected = $ref(0)
 let expatriate_relief = $ref(0.5)
 let bonus = $ref(0)
 let hf = $ref(0)
-let donations = $ref(300)
+let donations = $ref(0)
 let restrictions_of_ci: Record<number, number> = {
   2023: 5005,
   2024: 5239

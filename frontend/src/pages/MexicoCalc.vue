@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="4">
           <h4>Tax calculator Mexico</h4>
-          <v-select v-model="year" :items="[2023, 2024]" label="Year"></v-select>
+          <v-select v-model="year" :items="[2024]" label="Year"></v-select>
           <v-text-field label="Gross Salary" v-model.number="gross_salary" type="number" hide-details
             prefix="$"></v-text-field>
           <v-text-field label="Net Salary (€)" v-model="net_salary_expected" type="number" hide-details
