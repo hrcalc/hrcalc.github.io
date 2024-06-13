@@ -5,6 +5,7 @@
         <v-col cols="4">
           <h4>Tax calculator Mexico</h4>
           <v-select v-model="year" :items="[2024]" label="Year"></v-select>
+          <h3>$ = Mexican Peso(MXN)</h3>
           <v-text-field label="Gross Salary" v-model.number="gross_salary" type="number" hide-details
             prefix="$"></v-text-field>
           <v-text-field label="Net Salary (€)" v-model="net_salary_expected" type="number" hide-details
@@ -15,16 +16,13 @@
             <v-list-item>
               <v-list-item-title class="font-weight-bold">Taxable income calculation</v-list-item-title>
             </v-list-item>
-            <v-list-item title="Payroll salary">
-              <template v-slot:append>$ {{ payroll_salary }}</template>
-            </v-list-item>
-            <v-list-item title="Daily salary">
+            <v-list-item title="Daily salary Gross">
               <template v-slot:append>$ {{ rnd(daily_salary) }}</template>
             </v-list-item>
-            <v-list-item title="Christmas bonus">
+            <v-list-item title="Christmas bonus Gross">
               <template v-slot:append>$ {{ christmas_bonus }}</template>
             </v-list-item>
-            <v-list-item title="Vacation premium">
+            <v-list-item title="Vacation premium Gross">
               <template v-slot:append>$ {{ rnd(vacation_premium) }}</template>
             </v-list-item>
           </v-list>
@@ -163,7 +161,7 @@ let net_salary_expected = $ref(0)
 let exchange_rate = $ref(19.19)
 let expected_net_salary = $computed(() => net_salary_expected*exchange_rate)
 let year = $ref(new Date().getFullYear())
-let payroll_salary = $computed(() => gross_salary/2)
+// let payroll_salary = $computed(() => gross_salary/2)
 let daily_salary = $computed(() => gross_salary/30)
 let christmas_bonus = $computed(() => gross_salary/2)
 let vacation_premium = $computed(() => gross_salary/6)
