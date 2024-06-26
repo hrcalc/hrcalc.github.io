@@ -11,9 +11,9 @@
             prefix="€"></v-text-field>
           <v-list density="compact">
             <v-list-item>
-              <v-list-item-title class="font-weight-bold">Taxable income calculation</v-list-item-title>
+              <div class="font-weight-bold">Taxable income calculation after registration Autonomo</div>
             </v-list-item>
-            <v-list-item title="Base salary after registration Individual Entrepreneur/Autonomo(+10%)">
+            <v-list-item title="Base salary (+10%)">
               <template v-slot:append>€ {{ base_salary_after_registration }}</template>
             </v-list-item>
           </v-list>
