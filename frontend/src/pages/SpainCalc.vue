@@ -13,7 +13,7 @@
             <v-list-item>
               <v-list-item-title class="font-weight-bold">Taxable income calculation</v-list-item-title>
             </v-list-item>
-            <v-list-item title="Base salary after registration Individual Entrepreneur/ Autonomo">
+            <v-list-item title="Base salary after registration Individual Entrepreneur/Autonomo(+10%)">
               <template v-slot:append>€ {{ base_salary_after_registration }}</template>
             </v-list-item>
           </v-list>
@@ -29,7 +29,7 @@ Our corporate accountants, known as "gestors" in Spain, can assist you with calc
                 <th class="text-left">Social Plata</th>
                 <th class="text-left">Annual income</th>
                 <th class="text-left">Social Charges</th>                
-                <th class="text-left">Income Еax </th>
+                <th class="text-left">Income Tax</th>
                 <th class="text-left">Net Salary</th>
               </tr>
             </thead>
