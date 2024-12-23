@@ -13,7 +13,11 @@
             <v-list-item>
               <div class="font-weight-bold">Taxable income calculation after registration Autonomo</div>
             </v-list-item>
-            <v-list-item title="Base salary (+10%)">
+            <v-list-item>
+              <v-text-field label="Percent Increase" v-model.number="percent_increase" type="number" hide-details
+            prefix="%"></v-text-field>
+            </v-list-item>
+            <v-list-item :title="`Base salary (+${percent_increase}%)`">
               <template v-slot:append>€ {{ base_salary_after_registration }}</template>
             </v-list-item>
           </v-list>
@@ -92,12 +96,13 @@ Our corporate accountants, known as "gestors" in Spain, can assist you with calc
 </template>
 <script setup lang="ts">
 let gross_salary = $ref(3600)
+let percent_increase = $ref(10)
 
 const rnd = (f: number) => Math.round((f + Number.EPSILON) * 100) / 100
 let year = $ref(new Date().getFullYear())
 
 const first_year_monthly_social_charges = $ref(80)
-const base_salary_after_registration = $computed(() => rnd(gross_salary * 1.1))
+const base_salary_after_registration = $computed(() => rnd(gross_salary * (1 + percent_increase / 100)))
 const next_year_monthly_social_charges: Record<number, Function> = {
   2024: (base_amount: number) => {
     let amount = base_amount * 0.93

@@ -5,7 +5,7 @@
         <v-col cols="4">
           <h4>Tax calculator Cyprus</h4>
           <v-select v-model="year"
-            :items="[2023, 2024]"
+            :items="[2023, 2024, 2025]"
             label="Year"></v-select>
           <v-text-field label="Gross Salary" v-model.number="gross_salary" type="number" hide-details
             prefix="€"></v-text-field>
@@ -110,7 +110,8 @@ let hf = $ref(0)
 let donations = $ref(0)
 let restrictions_of_ci: Record<number, number> = {
   2023: 5005,
-  2024: 5239
+  2024: 5239,
+  2025: 5551
 }
 const rnd = (f: number) => Math.round((f + Number.EPSILON) * 100) / 100
 let year = $ref(new Date().getFullYear())
@@ -118,7 +119,8 @@ const restrictions_of_gesy = $ref(180000)
 const nhs_si_percent = $ref(0.0265)
 const si_percent: Record<number, number> = {
   2023: 0.083,
-  2024: 0.088
+  2024: 0.088,
+  2025: 0.088
 }
 watch($$(gross_salary), (newSalary) => {
   if (newSalary * 12 >= 55000) { expatriate_relief = 0.5 }
