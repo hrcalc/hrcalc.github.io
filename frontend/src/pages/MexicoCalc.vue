@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="4">
           <h4>Tax calculator Mexico</h4>
-          <v-select v-model="year" :items="[2024]" label="Year"></v-select>
+          <v-select v-model="year" :items="[2024, 2025]" label="Year"></v-select>
           <h3>$ = Mexican Peso(MXN)</h3>
           <v-text-field label="Gross Salary" v-model.number="gross_salary" type="number" hide-details
             prefix="$"></v-text-field>
@@ -167,7 +167,8 @@ let christmas_bonus = $computed(() => gross_salary/2)
 let vacation_premium = $computed(() => gross_salary/6)
 let monthly_taxable_income = $computed(() => daily_salary*30.4)
 let uma_by_year: Record<number, number> = {
-  2024: 108.57
+  2024: 108.57,
+  2025: 108.57
 }
 let uma = $computed(() => uma_by_year[year])
 
