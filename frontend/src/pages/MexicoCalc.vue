@@ -168,7 +168,7 @@ let vacation_premium = $computed(() => gross_salary/6)
 let monthly_taxable_income = $computed(() => daily_salary*30.4)
 let uma_by_year: Record<number, number> = {
   2024: 108.57,
-  2025: 108.57
+  2025: 113.14
 }
 let uma = $computed(() => uma_by_year[year])
 
