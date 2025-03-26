@@ -175,13 +175,13 @@ let uma = $computed(() => uma_by_year[year])
 const rnd = (f: number=0) => Math.round((f + Number.EPSILON) * 100) / 100
 
 let tax_table = [
-  {min: 0.01, max: 746.04, fixed: 0, percent: 0.02},
-  {min: 746.05, max: 6332.05, fixed: 14.32, percent: 0.06},
-  {min: 6332.06, max: 11128.01, fixed: 371.83, percent: 0.11},
+  {min: 0.01, max: 746.04, fixed: 0, percent: 0.0192},
+  {min: 746.05, max: 6332.05, fixed: 14.32, percent: 0.064},
+  {min: 6332.06, max: 11128.01, fixed: 371.83, percent: 0.1088},
   {min: 11128.02, max: 12935.82, fixed: 893.63, percent: 0.16},
-  {min: 12935.83, max: 15487.71, fixed: 1182.88, percent: 0.18},
-  {min: 15487.72, max: 31236.49, fixed: 1640.18, percent: 0.21},
-  {min: 31236.50, max: 49233.00, fixed: 5004.12, percent: 0.24},
+  {min: 12935.83, max: 15487.71, fixed: 1182.88, percent: 0.1792},
+  {min: 15487.72, max: 31236.49, fixed: 1640.18, percent: 0.2136},
+  {min: 31236.50, max: 49233.00, fixed: 5004.12, percent: 0.2352},
   {min: 49233.01, max: 93993.90, fixed: 9236.89, percent: 0.3},
   {min: 93993.91, max: 125325.20, fixed: 22665.17, percent: 0.32},
   {min: 125325.21, max: 375975.61, fixed: 32691.18, percent: 0.34},
@@ -207,7 +207,7 @@ let isr_tax = $computed(() => payroll_isr*2)
 // let actual_tax_rate = payroll_isr/payroll_salary*100
 
 let fix_integrated_salary = $computed(() => {
-  return daily_salary + 15/366*daily_salary + 20/366 * 0.25 * daily_salary
+  return daily_salary + 15/365*daily_salary + 20/365 * 0.25 * daily_salary
 })
 let sdi = $computed(() => Math.min(fix_integrated_salary, 25*uma))
 let imss_tax = $computed(() => {
