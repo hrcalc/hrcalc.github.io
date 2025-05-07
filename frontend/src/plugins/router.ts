@@ -9,6 +9,7 @@ const routes = [
       { path: '', name: 'index', component: () => import('../pages/IndexPage.vue'), },
       { path: 'spain', name: 'spain', component: () => import('../pages/SpainCalc.vue'), },
       { path: 'mexico', name: 'mexico', component: () => import('../pages/MexicoCalc.vue'), },
+      { path: 'mexico_bonus', name: 'mexico_bonus', component: () => import('../pages/MexicoCalcBonus.vue'), },
     ],
   },
 ]

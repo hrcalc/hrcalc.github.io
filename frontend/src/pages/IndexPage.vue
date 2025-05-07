@@ -11,6 +11,7 @@
             prefix="€"></v-text-field>
           <v-text-field label="Net Salary (€)" v-model="net_salary_expected" type="number" hide-details
             append-inner-icon="mdi-calculator" @click:append-inner="calculate"></v-text-field>
+          <!--<v-text-field label="Annual Bonus (multipler)" v-model="annual_bonus_multiplier" type="number" hide-details></v-text-field>-->
           <!-- <v-checkbox label="Expatriate relief" v-model="expatriate_relief" hide-details></v-checkbox> -->
           <v-select v-model="expatriate_relief"
             :items="[{ title: 'Expatriate relief 50%', value: 0.5 }, { title: 'Expatriate relief 20%', value: 0.2 }, { title: 'No relief', value: 0 }]"
@@ -93,6 +94,11 @@
                 <td class="text-left">€ {{ item.tax }}</td>
                 <td class="text-left">€ {{ item.net_salary }}</td>
               </tr>
+              <tr>
+                <td class="text-left" >Annual</td>
+                <td class="text-left" colspan="5"></td>
+                <td class="text-left">€ {{ annual_salary }}</td>
+              </tr>
             </tbody>
           </v-table>
         </v-col>
@@ -104,6 +110,7 @@
 import { watch } from 'vue';
 let gross_salary = $ref(3000)
 let net_salary_expected = $ref(0)
+//let annual_bonus_multiplier = $ref(0) // TODO
 let expatriate_relief = $ref(0.5)
 let bonus = $ref(0)
 let hf = $ref(0)
@@ -132,7 +139,7 @@ const nhs_si = $computed(() => rnd(Math.min(restrictions_of_gesy, gross_salary) 
 
 const months = $ref(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])
 
-const taxable_source_of_income = $computed(() => rnd(gross_salary * 12))
+const taxable_source_of_income = $computed(() => rnd(gross_salary * (12/*+annual_bonus_multiplier*/)))
 
 const expatriate_relief_value = $computed(() => {
   if (expatriate_relief == 0.2 && rnd(taxable_source_of_income * expatriate_relief) > 8550) return 8550
@@ -141,8 +148,8 @@ const expatriate_relief_value = $computed(() => {
 
 const net_income = $computed(() => rnd(taxable_source_of_income - expatriate_relief_value - donations))
 
-const personal_allowances = $computed(() => rnd(net_income / 5)
-)
+const personal_allowances = $computed(() => rnd(net_income / 5))
+
 const social_insurance_contributions = $computed(() => rnd((si + nhs_si) * 12))
 
 const taxable_income = $computed(() => {
@@ -188,6 +195,10 @@ const rows = $computed(() => {
       net_salary: net_salary
     }
   })
+})
+
+const annual_salary = $computed(() => {
+  return rows.reduce((p,n)=>p+n.net_salary, 0)
 })
 
 const calculate = () => {
