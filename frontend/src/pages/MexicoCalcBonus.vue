@@ -150,11 +150,14 @@
                 <td class="text-left">$ {{ rnd(vacation_net_salary) }}</td>
               </tr>
               <tr>
-                <td class="text-left" colspan="5">Average for 12 month</td>
+                <td class="text-left">Average(12 month)</td>
+                <td class="text-left" colspan="4">$ {{ rnd(average_gross) }}</td>
                 <td class="text-left">$ {{ rnd(average_net_calculation) }}</td>
               </tr>
               <tr>
-                <td class="text-left" colspan="5">Annual Salary</td>
+                <td class="text-left">Annual Salary</td>
+                
+                <td class="text-left" colspan="4">$ {{ rnd(annual_gross_salary) }}</td>
                 <td class="text-left">$ {{ rnd(annual_net_salary) }}</td>
               </tr>
             </tbody>
@@ -257,6 +260,10 @@ let vacation_net_salary = $computed(() => {
   return gross_salary + vacation_premium - isr_tax - vacation_actual_tax - imss_tax
 })
 
+let annual_gross_salary = $computed(
+  () => gross_salary*12 + annual_bonus + christmas_bonus + vacation_premium
+)
+let average_gross = $computed(() => annual_gross_salary/12)
 let annual_net_salary = $computed(() => (net_salary*10 + christmas_net_salary + vacation_net_salary))
 let average_net_calculation = $computed(() => annual_net_salary/12)
 
